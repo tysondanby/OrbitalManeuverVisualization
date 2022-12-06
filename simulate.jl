@@ -67,11 +67,11 @@ function simulate!(sim,dt)
                         refv = sim.bodies[i].v
                     end
                 end
-                prograde = normalize(sim.rocket.v)
+                prograde = normalize(sim.rocket.v - refv)
                 radial = normalize(sim.rocket.pos - refpos)
                 normal = normalize(cross(radial,prograde))
                 #make the conversion
-                sim.maneuvers[sim.maneuver].dir = sim.maneuvers[sim.maneuver].dir[1]*prograde + sim.maneuvers[sim.maneuver].dir[2]*normal + sim.maneuvers[sim.maneuver].dir[2]*radial
+                sim.maneuvers[sim.maneuver].dir = sim.maneuvers[sim.maneuver].dir[1]*prograde + sim.maneuvers[sim.maneuver].dir[2]*normal + sim.maneuvers[sim.maneuver].dir[3]*radial
             
             end
         end

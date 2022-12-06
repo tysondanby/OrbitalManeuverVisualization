@@ -16,11 +16,12 @@ seconds = 0.0
 tfinish = 3600*(24*days+hours)+60*minutes+seconds
 
 framesplotted = ["Earth","Moon"]
-pointsplotted = 1000
+pointsplotted = round(tfinish/40)
 dt = 1.0
-scale = [100,5] #Times frame of reference radius
+scale = [100,10] #Times frame of reference radius
 
 #--------------------Do not modify
 trange = [tstart,tfinish]
 plots = runandplot(excelfile,trange,dt,framesplotted,pointsplotted,scale)
 
+trange

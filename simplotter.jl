@@ -1,4 +1,4 @@
-using PlotlyJS, DataFrames
+using PlotlyJS
 #make trange select the right values
 function simtoindexrange(sim,tframe)
     indexrange = [0,0]
@@ -96,11 +96,14 @@ function simtorockettrace(sim,frame,color1,color2,n)
     x = []
     y = []
     z = []
+    t = []
     for i = 1:n:length(traj)
         xi,yi,zi = traj[i]
+        ti = sim.ts[i]
         push!(x,xi)
         push!(y,yi)
         push!(z,zi)
+        push!(t,ti)
     end
     pathtrace = scatter(x=x,y=y,z=z,line=attr(color=color1, width=2),type="scatter3d",mode="lines")
     push!(traces,pathtrace)
@@ -112,10 +115,9 @@ function simtorockettrace(sim,frame,color1,color2,n)
         zs = []
         for i = 1:1:length(sim.rocket.tburnouts)
             tstage=sim.rocket.tburnouts[i]
-            for index = 1:1:length(sim.ts)
-                if sim.ts[i] >= tstage
+            for index = 1:1:length(t)
+                if t[index] >= tstage
                     index2 = deepcopy(index)
-                    push!(staginindicies,index2)
                     push!(xs,x[index2])
                     push!(ys,y[index2])
                     push!(zs,z[index2])
@@ -133,8 +135,8 @@ function simtorockettrace(sim,frame,color1,color2,n)
         zm = []
         for maneuver = 1:1:length(sim.maneuvers)
             tm = sim.maneuvers[maneuver].t0
-            for index = 1:1:length(sim.ts)
-                if sim.ts[index] >= tm
+            for index = 1:1:length(t)
+                if t[index] >= tm
                     index2 = deepcopy(index)
                     push!(xm,x[index2])
                     push!(ym,y[index2])
@@ -182,7 +184,8 @@ function simplotter(sim,frame,n,trange,scale)#Frame is a string name of the body
             nticks = 10,
             range  =[-maxdist,maxdist]
         ),
-    )
+    ),
+    plot_bgcolor="rgb(0, 0, 0)"
     )
     #println(typeof(traces[1]))
     p = plot(traces[1],layout)
