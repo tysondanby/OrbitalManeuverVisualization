@@ -37,6 +37,19 @@ function frametrajectory(sim,frame)#basically returns body.path for body in sim 
     return path
 end
 
+function frameradius(sim,frame)#basically returns body.r for body in sim with name frame.
+    R = []
+    for i = 1:1:length(sim.bodies)
+        bodyname =sim.bodies[i].name
+        #println("is $bodyname"*" == $frame"*"?")#DEBUG
+        if "$bodyname" == "$frame"
+            R = sim.bodies[i].r
+            #println(path)#DEBUG
+        end
+    end
+    return R
+end
+
 function simtobodytraces(sim,frame,color,n)
     frametraj = frametrajectory(sim,frame)
     traces = [] 
@@ -137,7 +150,7 @@ function simtorockettrace(sim,frame,color1,color2,n)
 end
 
 
-function simplotter(sim,frame,n,trange,maxdist)#Frame is a string name of the body n is the number of timesteps per plot point.
+function simplotter(sim,frame,n,trange,scale)#Frame is a string name of the body n is the number of timesteps per plot point.
     simcopy = deepcopy(sim)
     simtrim!(simcopy,trange)
     btraces1 =simtobodytraces(simcopy,frame,"darkblue",n)#build body path traces (Line plots)
@@ -145,6 +158,7 @@ function simplotter(sim,frame,n,trange,maxdist)#Frame is a string name of the bo
     rtrace = simtorockettrace(simcopy,frame,"darkblue","red",n)#Build rocket path trace (Line plot)
     traces = append!(btraces1,btraces2,rtrace)
 
+    maxdist = scale*frameradius(sim,frame)
     layout = Layout(
     width=800,
     height=800,

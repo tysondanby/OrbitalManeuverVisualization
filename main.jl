@@ -2,7 +2,7 @@ include("buildsim.jl")
 include("simulate.jl")
 include("simplotter.jl")
 
-function runandplot(excelfile,trange,dt,frames,nplot,maxdist)
+function runandplot(excelfile,trange,dt,frames,nplot,scales)
     ps = []
     sim = buildsim(excelfile)
     t = trange[1]
@@ -14,7 +14,7 @@ function runandplot(excelfile,trange,dt,frames,nplot,maxdist)
     end
     n = round(Int64,length(sim.rocket.path)/nplot) #Number of sim points per plot point
     for i = 1:1:length(frames)
-        push!(ps,simplotter(sim,frames[i],n,trange,maxdist))
+        push!(ps,simplotter(sim,frames[i],n,trange,scales[i]))
     end
     return ps
 end
