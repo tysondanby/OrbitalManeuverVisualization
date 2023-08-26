@@ -18,7 +18,10 @@ mutable struct rocket#{T1,T2,T3,T4,T5}
     v#::T4
     path#::T5
     tburnouts#::T1
-    rocket(m,stages,pos,v)= new(m,1,stages,pos,v,[],[])
+    tas
+    thrustaccels
+    deltavs
+    rocket(m,stages,pos,v)= new(m,1,stages,pos,v,[],[],[],[],[])
 end
 
 struct stage#{T1}
