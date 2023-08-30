@@ -94,7 +94,7 @@ function simulate!(sim,dt)
     end
     
     #Propogate thrust's effect on mass
-    dm = norm(T)/(sim.rocket.stages[sim.rocket.stage].Isp * 9.81)
+    dm = norm(T)*dt/(sim.rocket.stages[sim.rocket.stage].Isp * 9.81)
     sim.rocket.m = sim.rocket.m - dm
     #Check if necessary to stage
     if sim.rocket.m <= sim.rocket.stages[sim.rocket.stage].mf

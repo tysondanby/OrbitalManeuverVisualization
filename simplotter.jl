@@ -64,7 +64,7 @@ function simtobodytraces(sim,frame,color,n)
             push!(y,yi)
             push!(z,zi)
         end
-        trace = scatter(x=x,y=y,z=z,line=attr(color=color, width=2),type="scatter3d",mode="lines")
+        trace = PlotlyJS.scatter(x=x,y=y,z=z,line=attr(color=color, width=2),type="scatter3d",mode="lines")
         push!(traces,trace)
     end
     return traces
@@ -83,7 +83,7 @@ function simtobodyspheres(sim,frame)
         x = @. r*cos(v)*cos(u) + center[1]
         y = @. r*cos(v)*sin(u) + center[2]
         z = @. r*sin(v) + center[3]
-        sphere = surface(x=x, y=y, z=z)
+        sphere = PlotlyJS.surface(x=x, y=y, z=z)
         push!(traces,sphere)
     end
     return traces
@@ -105,7 +105,7 @@ function simtorockettrace(sim,frame,color1,color2,n)
         push!(z,zi)
         push!(t,ti)
     end
-    pathtrace = scatter(x=x,y=y,z=z,line=attr(color=color1, width=2),type="scatter3d",mode="lines")
+    pathtrace = PlotlyJS.scatter(x=x,y=y,z=z,line=attr(color=color1, width=2),type="scatter3d",mode="lines")
     push!(traces,pathtrace)
 
     if length(sim.rocket.tburnouts) != 0
@@ -125,7 +125,7 @@ function simtorockettrace(sim,frame,color1,color2,n)
                 end
             end
         end
-        stagetrace = scatter(x=xs,y=ys,z=zs,line=attr(color=color1, width=2),type="scatter3d",mode="markers")
+        stagetrace = PlotlyJS.scatter(x=xs,y=ys,z=zs,line=attr(color=color1, width=2),type="scatter3d",mode="markers")
         push!(traces,stagetrace)
     end
     
@@ -145,7 +145,7 @@ function simtorockettrace(sim,frame,color1,color2,n)
                 end
             end
         end
-        maneuvertrace =  scatter(x=xm,y=ym,z=zm,line=attr(color=color2, width=2),type="scatter3d",mode="markers")
+        maneuvertrace =  PlotlyJS.scatter(x=xm,y=ym,z=zm,line=attr(color=color2, width=2),type="scatter3d",mode="markers")
         push!(traces,maneuvertrace)
     end
     return traces
@@ -188,7 +188,7 @@ function simplotter(sim,frame,n,trange,scale)#Frame is a string name of the body
     plot_bgcolor="rgb(0, 0, 0)"
     )
     #println(typeof(traces[1]))
-    p = plot(traces[1],layout)
+    p = PlotlyJS.plot(traces[1],layout)
     for i = 2:1:length(traces)
         add_trace!(p,traces[i])
     end

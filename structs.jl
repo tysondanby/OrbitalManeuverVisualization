@@ -7,7 +7,8 @@ mutable struct body#{T1,T2,T3}
     path#::T3 
     r
     name
-    body(m,pos,v,r,name)= new(m,pos,v,[],r,name)
+    period
+    body(m,pos,v,r,name,period)= new(m,pos,v,[],r,name,period)
 end
 
 mutable struct rocket#{T1,T2,T3,T4,T5}
@@ -64,4 +65,13 @@ mutable struct orbit#{T1,T2,T3}
     th0#::T2
     frame
     r
+end
+
+struct AnimParams
+    length
+    FPS
+    tracking
+    latitude
+    longitude
+    resolution
 end

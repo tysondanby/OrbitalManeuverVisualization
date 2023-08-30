@@ -85,6 +85,7 @@ function exceltobodies(filename,sheetname)
     #Read bodies into orbits from excel
         bodiesxl = excel[sheetname]
         orbits = []
+        periods = []
         for row in XLSX.eachrow(bodiesxl)
             if row[1] != "name"
                 pos = [0.0,0.0,0.0]
@@ -100,6 +101,7 @@ function exceltobodies(filename,sheetname)
                 LPe = row[8]
                 Lan = row[9]
                 th0 = row[10]
+                push!(periods,row[11])
                 frame = "orbit"
                 neworbit = orbit(pos,v,name,parent,m1,m2,Ap,Pe,inc,LPe,Lan,th0,frame,r)
                 push!(orbits,neworbit)
@@ -126,7 +128,7 @@ function exceltobodies(filename,sheetname)
         for i = 1:1:length(orbits)
             #rotate velocity and rotate+translate position into general frame #CHECK
             orbittoglobalframe!(orbits,i)
-            newbody = body(orbits[i].m1,orbits[i].pos,orbits[i].v,orbits[i].r,orbits[i].name)
+            newbody = body(orbits[i].m1,orbits[i].pos,orbits[i].v,orbits[i].r,orbits[i].name,periods[i])
             push!(bodies,newbody)
         end
     return bodies, orbits
